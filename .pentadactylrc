@@ -1,1 +1,272 @@
-/home/juangocc/.pentadactylrc
+"hg7127
+
+loadplugins '\.(js|penta)$'
+group user
+
+" vim: set ft=pentadactyl:
+
+" Command to validate XHTML
+command! -description='Validate XHTML' valid :open javascript:void(location='http://validator.w3.org/check?uri='+escape(location))
+
+" I never use marks, but always use quickmarks
+nmap -builtin "'" go
+nmap -builtin '"' gn
+
+" Highlight all search matches, not just the first
+set hlfind
+
+" Configure the command line and the look
+" set maxitems=20 
+set showtabline=never
+set showstatuslinks=command
+set guioptions=Cs
+
+" Editor, C-e invokes it in text fields
+set editor="emacsclient -c"
+
+" Shift is hard.
+" nmap -builtin ; :
+
+" Colorscheme
+" colorscheme molokai
+
+" Youtube Controls
+
+command! -nargs=* youtubejumppvideo -description "Jump to Percentage of Youtube Video Position" :open javascript:
+\\ (function(){
+\\
+\\ /*
+\\ Salta a la posición del video
+\\ 1) En minutos
+\\ 2) En segundos
+\\ 3) En horas
+\\ 4) En reloj
+\\ 5) En porcentaje
+\\ 
+\\ Falta función para cambiar el volumen, la calidad, y el tamaño
+\\ 
+\\ */
+\\ if("<args>".trim() !== "") {
+\\ var args="<args>".split(" ");
+\\ var count=args[0];
+\\
+\\ var vid =content.document.getElementById('movie_player');
+\\ 
+\\ var videourl=vid.getVideoUrl();
+\\ var duration=vid.getDuration();
+\\ var currenttime=vid.getCurrentTime();
+\\ var availableQualityLevels=vid.getAvailableQualityLevels();
+\\
+\\ /* Salta un porcentaje */
+\\ if(count>100){
+\\ count=100;
+\\ }
+\\ if(count<0){
+\\ count=0;
+\\ }
+\\ var jump=(duration*count)/100;
+\\
+\\ if(jump>duration){
+\\ jump=duration
+\\ }
+\\
+\\ vid.seekTo(jump, true);
+\\ 
+\\ }
+\\
+\\ })()
+
+command! -nargs=* youtubejumpsvideo -description "Jump to Seconds of Youtube Video Position" :open javascript:
+\\ (function(){
+\\
+\\ /*
+\\ Salta a la posición del video
+\\ 1) En minutos
+\\ 2) En segundos
+\\ 3) En horas
+\\ 4) En reloj
+\\ 5) En porcentaje
+\\ 
+\\ Falta función para cambiar el volumen, la calidad, y el tamaño
+\\ 
+\\ */
+\\ if("<args>".trim() !== "") {
+\\ var args="<args>".split(" ");
+\\ var count=args[0];
+\\
+\\ var vid =content.document.getElementById('movie_player');
+\\ 
+\\ var videourl=vid.getVideoUrl();
+\\ var duration=vid.getDuration();
+\\ var currenttime=vid.getCurrentTime();
+\\ var availableQualityLevels=vid.getAvailableQualityLevels();
+\\ 
+\\ if(count<0){
+\\ count=0;
+\\ }
+\\ /* Salta unos segundos */
+\\ jump=count;
+\\
+\\ if(jump>duration){
+\\ jump=duration
+\\ }
+\\
+\\ vid.seekTo(jump, true);
+\\ 
+\\ }
+\\
+\\ })()
+
+command! -nargs=* youtubejumpmvideo -description "Jump to Minutes of Youtube Video Position" :open javascript:
+\\ (function(){
+\\
+\\ /*
+\\ Salta a la posición del video
+\\ 1) En minutos
+\\ 2) En segundos
+\\ 3) En horas
+\\ 4) En reloj
+\\ 5) En porcentaje
+\\ 
+\\ Falta función para cambiar el volumen, la calidad, y el tamaño
+\\ 
+\\ */
+\\ if("<args>".trim() !== "") {
+\\ var args="<args>".split(" ");
+\\ var count=args[0];
+\\
+\\ var vid =content.document.getElementById('movie_player');
+\\ 
+\\ var videourl=vid.getVideoUrl();
+\\ var duration=vid.getDuration();
+\\ var currenttime=vid.getCurrentTime();
+\\ var availableQualityLevels=vid.getAvailableQualityLevels();
+\\
+\\ if(count<0){
+\\ count=0;
+\\ }
+\\ /* Salta unos minutos */
+\\ jump=count*60;
+\\
+\\ if(jump>duration){
+\\ jump=duration
+\\ }
+\\
+\\ vid.seekTo(jump, true);
+\\ 
+\\ }
+\\
+\\ })()
+
+command! -nargs=* youtubejumphvideo -description "Jump to Hours of Youtube Video Position" :open javascript:
+\\ (function(){
+\\
+\\ /*
+\\ Salta a la posición del video
+\\ 1) En minutos
+\\ 2) En segundos
+\\ 3) En horas
+\\ 4) En reloj
+\\ 5) En porcentaje
+\\ 
+\\ Falta función para cambiar el volumen, la calidad, y el tamaño
+\\ 
+\\ */
+\\ if("<args>".trim() !== "") {
+\\ var args="<args>".split(" ");
+\\ var count=args[0];
+\\
+\\ var vid =content.document.getElementById('movie_player');
+\\ 
+\\ var videourl=vid.getVideoUrl();
+\\ var duration=vid.getDuration();
+\\ var currenttime=vid.getCurrentTime();
+\\ var availableQualityLevels=vid.getAvailableQualityLevels();
+\\ 
+\\ if(count<0){
+\\ count=0;
+\\ }
+\\ /* Salta unos horas */
+\\ jump=count*3600;
+\\ 
+\\ if(jump>duration){
+\\ jump=duration
+\\ }
+\\
+\\ vid.seekTo(jump, true);
+\\ 
+\\ }
+\\
+\\ })()
+
+nmap -count <A-S-p> :youtubejumppvideo <count> <CR>
+nmap -count <A-S-s> :youtubejumpsvideo <count> <CR>
+nmap -count <A-S-m> :youtubejumpmvideo <count> <CR>
+nmap -count <A-S-h> :youtubejumphvideo <count> <CR>
+
+command! youtubetogglevideo -description "Toggle Youtube Video Status" :open javascript:
+\\ (function(){
+\\ /*
+\\ Caracteristicas para notar de PentaDactyl
+\\ 1) No funciona jQuery
+\\ 2) Cada nueva linea tiene que empezar con dos back slash
+\\ 3) los comentarios solo funcionan con slash asterisco
+\\ 4) El código tiene que estar envuelto (wrapp) en un método, y este
+\\    envuelto en un self-invoking
+\\ 5) Los argumentos no son tratados como cadenas (Strings)
+\\ 6) Algunas funciones como alerts necesitan punto y coma (;) al final, o es antes de definir una variable
+\\ 7) Si no se manda un argumento llega una cadena vacia
+\\ 8) Los argumentos se separan con espacio y se mandan tal cual por los parametros
+\\ 9) los argumentos llegan en una variable args entre mayor y menor que
+\\ 10) El nombre del método envolvente (wrap) puede tener o no nombre (función anónima)
+\\ 11) Hay varias formas de utilizar javascript dependiendo del contexto 
+\\ */
+\\ var vid =content.document.getElementById("movie_player");
+\\ var sStatus=vid.getPlayerState();
+\\ if (sStatus == -1) {
+\\     /* alert ("Video has not started."); */
+\\     vid.playVideo()
+\\ }
+\\ else if (sStatus == 0){
+\\     /* alert ("Video has ended."); */
+\\     vid.playVideo()
+\\ }
+\\ else if (sStatus == 1){
+\\     /* alert ("Video is playing."); */
+\\     vid.pauseVideo()
+\\ }
+\\ else if (sStatus == 2){
+\\     /* alert ("Video is paused."); */
+\\     vid.playVideo()
+\\ }
+\\ else if (sStatus == 3){
+\\     /* alert ("Video is buffering."); */
+\\     vid.playVideo()
+\\ }
+\\ else if (sStatus == 5){
+\\     /* alert ("Video is cued."); */
+\\     vid.playVideo()
+\\ }
+\\ })()
+
+nmap <A-S-t> :youtubetogglevideo <CR>
+
+command! youtubefullscreenvideo -description "Request FullScreen Youtube Video" -js <<EOF
+ /*
+ Request FullScreen YouTube Video Player
+ */
+ var vid =content.document.getElementById("movie_player");
+ /* Once the user clicks a custom fullscreen button */
+ if (vid.requestFullScreen) {
+   vid.requestFullScreen();
+ } else if (vid.mozRequestFullScreen) {
+   vid.mozRequestFullScreen();
+ } else if (vid.webkitRequestFullScreen) {
+   vid.webkitRequestFullScreen();
+ }
+EOF
+
+nmap <A-S-f> :youtubefullscreenvideo <CR>
+
+"Press yt to view a YouTube video as fullscreened within the window (Embeded)
+map yt -js dactyl.open( String.replace(buffer.URL, /watch/, "watch_popup"))
